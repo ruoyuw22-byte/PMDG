@@ -1,0 +1,30 @@
+{
+  "anomalies": null,
+  "anomalies_path": "artifacts/splits/vindr_breast_seed2026_anomalies.csv",
+  "counts": {
+    "test": {
+      "both": 22,
+      "breasts": 2000,
+      "calcification": 54,
+      "mass": 119
+    },
+    "train": {
+      "both": 71,
+      "breasts": 6400,
+      "calcification": 139,
+      "mass": 393
+    },
+    "val": {
+      "both": 18,
+      "breasts": 1600,
+      "calcification": 36,
+      "mass": 97
+    }
+  },
+  "manifest_fingerprint": "68e1571a7c5a838c10a6a1eeecb831fbaa15c949c27c6921a865d0e1271d10d2",
+  "assignment_path": "artifacts/splits/vindr_breast_seed2026_assignments.csv",
+  "assignment_sha256": "a1cf5610a1f5f3da2f0cae76a88897964e3b9c0f3ecf1fe82c1706997ae91969",
+  "manifest_path": "artifacts/splits/vindr_breast_seed2026.csv",
+  "manifest_sha256": "feb297a739ce895672dd5a69a7501669d90c427da51c6d0a02488c1daf51fb38",
+  "status": "publication_snapshot"
+}

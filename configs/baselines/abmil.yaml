@@ -1,0 +1,6 @@
+extends: ../dagl.yaml
+experiment:
+  name: abmil
+model:
+  name: abmil
+

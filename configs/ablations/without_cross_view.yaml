@@ -1,0 +1,7 @@
+extends: ../dagl.yaml
+experiment:
+  name: dagl_without_cross_view
+model:
+  ablation:
+    cross_view: false
+

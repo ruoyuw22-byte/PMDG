@@ -1,0 +1,10 @@
+extends: ../dagl.yaml
+experiment:
+  name: cross_view_transformer_mil
+model:
+  name: cross_view_transformer_mil
+  cross_view_blocks: 2
+  attention_heads: 4
+  feedforward_dim: 512
+  transformer_dropout: 0.1
+

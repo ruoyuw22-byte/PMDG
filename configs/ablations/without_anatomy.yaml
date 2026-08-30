@@ -1,0 +1,7 @@
+extends: ../dagl.yaml
+experiment:
+  name: dagl_without_anatomy
+model:
+  ablation:
+    anatomy: false
+

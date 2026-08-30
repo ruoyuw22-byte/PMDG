@@ -1,0 +1,8 @@
+extends: ../dagl.yaml
+experiment:
+  name: dagl_without_prototype_and_graph
+model:
+  ablation:
+    prototypes: false
+    graph: false
+

@@ -1,0 +1,11 @@
+extends: ../dagl.yaml
+experiment:
+  name: fpn_set_transformer
+model:
+  name: fpn_set_transformer
+  attention_heads: 4
+  inducing_points_by_scale: [64, 32, 16]
+  isab_layers: 2
+  pma_seeds: 1
+  scale_attention_hidden_dim: 128
+

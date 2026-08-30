@@ -1,0 +1,118 @@
+experiment:
+  name: dagl_mil_full
+  protocol_version: manuscript_2026-08-27
+
+paths:
+  vindr_root: './data/vindr-mammo-1.0.0'
+  checkpoint: './weights/model-epoch-10.repacked.pt'
+  split_manifest: './artifacts/splits/vindr_breast_seed2026.csv'
+  preprocessing_cache: './cache/standardized_dicom'
+  # Deterministic val/test GAP features only; training and FPN always bypass it.
+  feature_cache: './cache/mammoclip_b2_gap_eval'
+  output_root: './outputs'
+
+data:
+  patch_size: 512
+  train_stride: 512
+  eval_stride: 128
+  minimum_breast_coverage: 0.5
+  breast_mask_threshold: otsu_with_nonpadding_topology_guard
+  intensity_percentiles: [1.0, 99.0]
+  mean: 0.3089
+  std: 0.2505
+  gamma_probability: 0.5
+  gamma_range: [0.9, 1.1]
+  contrast_probability: 0.5
+  contrast_range: [0.9, 1.1]
+  geometric_augmentation: false
+  cache_preprocessed_images: true
+  strict_two_view_pair: false
+  # Raw-pixel audit: only these four Otsu components lie wholly in the second
+  # largest non-padding component. This exact set is a formal drift guard.
+  expected_topology_fallback_image_ids:
+    - fb8fd3863ad17037894b4171da696251
+    - 8ebbb6116d0a6187d9dc5eed5836e196
+    - 863bde43e71a55208eda16c6baa2a974
+    - 7e1c0fa32a1924fc7f80c5efbc3753d8
+
+model:
+  name: dagl_mil
+  feature_dim: 352
+  token_dim: 256
+  view_embedding_dim: 8
+  prototypes_per_group: 8
+  graph_neighbors: 16
+  graph_layers: 2
+  graph_activation: gelu
+  graph_dropout: 0.0
+  spatial_temperature: 0.10
+  relation_weights: [1.0, 1.0, 1.0]
+  prototype_response_coefficient: 0.50
+  prototype_margin: 0.20
+  prototype_diversity_threshold: 0.50
+  topk_fraction: 0.05
+  topk_minimum: 8
+  view_attention_hidden_dim: 128
+  cross_view_shared_projection: true
+  baseline_graph_neighbors: 16
+  ablation:
+    anatomy: true
+    prototypes: true
+    graph: true
+    cross_view: true
+    topk: true
+    diversity: true
+
+loss:
+  classification: 1.0
+  prototype: 0.1
+  diversity: 0.01
+  graph: 0.05
+  cross_view: 0.1
+  sparsity: 0.01
+  # Exact breast-level negative/positive ratios: 6007/393 and 6261/139.
+  positive_weights: [15.28498727735369, 45.0431654676259]
+
+training:
+  seed: 2026
+  epochs: 30
+  batch_size: 4
+  gradient_accumulation: 2
+  patch_micro_batch_size: 16
+  learning_rate: 5.0e-5
+  minimum_learning_rate: 1.0e-6
+  weight_decay: 1.0e-4
+  adam_betas: [0.9, 0.999]
+  adam_epsilon: 1.0e-8
+  gradient_clip_norm: 5.0
+  mixed_precision: fp16
+  # Conservative start for large rare-class positive weights; GradScaler
+  # remains dynamic after initialization.
+  amp_initial_scale: 4096.0
+  early_stopping_patience: 8
+  early_stopping_min_delta: 0.0
+  # Local RTX 4090/Windows benchmarks on the complete standardized cache:
+  # 16 train workers feed ~420--506 patches/s; four eval workers exceed the
+  # frozen backbone's ~760 patch/s while keeping stride-128 prefetch bounded.
+  num_workers: 16
+  eval_num_workers: 4
+  deterministic: true
+  resume: null
+
+evaluation:
+  bootstrap_samples: 2000
+  bootstrap_seed: 2026
+  heatmap_quantile: 0.95
+  heatmap_fixed_threshold: 0.5
+  connected_components: 8
+  minimum_box_area: null
+  nms: false
+  maximum_boxes: null
+  iou_threshold: 0.25
+  size_thresholds: [16384, 65536]
+  timing_warmup: 20
+  timing_repetitions: 100
+
+runtime:
+  device: cuda
+  require_cuda: true

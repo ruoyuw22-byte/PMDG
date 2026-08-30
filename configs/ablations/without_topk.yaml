@@ -1,0 +1,7 @@
+extends: ../dagl.yaml
+experiment:
+  name: dagl_without_topk
+model:
+  ablation:
+    topk: false
+

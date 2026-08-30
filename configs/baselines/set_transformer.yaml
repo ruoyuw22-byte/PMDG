@@ -1,0 +1,10 @@
+extends: ../dagl.yaml
+experiment:
+  name: set_transformer
+model:
+  name: set_transformer
+  attention_heads: 4
+  inducing_points: 64
+  isab_layers: 2
+  pma_seeds: 1
+

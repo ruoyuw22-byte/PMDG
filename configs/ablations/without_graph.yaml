@@ -1,0 +1,7 @@
+extends: ../dagl.yaml
+experiment:
+  name: dagl_without_graph
+model:
+  ablation:
+    graph: false
+

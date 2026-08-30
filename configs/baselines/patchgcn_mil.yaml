@@ -1,0 +1,9 @@
+extends: ../dagl.yaml
+experiment:
+  name: patchgcn_mil
+model:
+  name: patchgcn_mil
+  graph_layers: 2
+  graph_dropout: 0.1
+  baseline_graph_neighbors: 16
+
