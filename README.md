@@ -1,5 +1,7 @@
 # PMDG
 
+*PMDG: Prototype-Guided Multiscale Dual-View Graph Reasoning for Weakly Supervised Breast Lesion Recognition*
+
 PMDG is a breast-level weakly supervised framework for paired-view
 mammography classification and lesion localization. A sample is one breast
 with its available ipsilateral CC and MLO views. The network predicts two
@@ -29,9 +31,9 @@ The complete mapping from manuscript concepts to source files is provided in
 ## Repository structure
 
 ```text
-configs/                 DAGL, five baselines and seven ablations
+configs/                 PMDG, five baselines and seven ablations
 src/dagl_mil/data/       manifest, DICOM preprocessing and patch bags
-src/dagl_mil/models/     DAGL-MIL, baselines and frozen Mammo-CLIP encoder
+src/dagl_mil/models/     PMDG, baselines and frozen Mammo-CLIP encoder
 src/dagl_mil/engine/     training, checkpoints, feature encoding and inference
 src/dagl_mil/evaluation/ classification, localization, bootstrap and efficiency
 scripts/                 data gates, cache builders and experiment wrappers
@@ -85,7 +87,7 @@ Run a real-DICOM smoke test:
 dagl-mil smoke --resume --skip-completed
 ```
 
-Train, infer and evaluate DAGL-MIL:
+Train, infer and evaluate PMDG:
 
 ```bash
 dagl-mil train --config configs/dagl.yaml --resume --skip-completed
