@@ -1,6 +1,6 @@
-# DAGL-MIL
+# PMDG
 
-DAGL-MIL is a breast-level weakly supervised framework for paired-view
+PMDG is a breast-level weakly supervised framework for paired-view
 mammography classification and lesion localization. A sample is one breast
 with its available ipsilateral CC and MLO views. The network predicts two
 independent targets—mass and suspicious calcification—and reconstructs
